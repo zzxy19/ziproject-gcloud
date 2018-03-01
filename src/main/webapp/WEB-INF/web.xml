@@ -5,16 +5,16 @@
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
-        <servlet-name>demo</servlet-name>
-        <servlet-class>com.ziproject.zibackend.DemoServlet</servlet-class>
+        <servlet-name>dummy</servlet-name>
+        <servlet-class>com.ziproject.zibackend.DummyServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>datastore</servlet-name>
         <servlet-class>com.ziproject.zibackend.DatastoreServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>demo</servlet-name>
-        <url-pattern>/demo</url-pattern>
+        <servlet-name>dummy</servlet-name>
+        <url-pattern>/dummy</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>datastore</servlet-name>
