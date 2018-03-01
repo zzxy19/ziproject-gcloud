@@ -2,7 +2,7 @@ var myApp = angular.module('myApp', ['ui.router', 'sudokuComponent', 'picCBCompo
 
 myApp.controller('myAppController', function myAppController($scope) {
 	$scope.title = "Hello world!";
-	$scope.prompt = "Welcome to me testing page.";
+	$scope.prompt = "Welcome to my testing page.";
 });
 
 myApp.config(function($stateProvider, $urlRouterProvider) {
