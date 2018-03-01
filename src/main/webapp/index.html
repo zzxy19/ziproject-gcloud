@@ -1,10 +1,31 @@
-<!doctype html>
-<html>
-  <head>
-    <title>App Engine Demo</title>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  </head>
-  <body>
-    <div id="result">You are visiting this page not intended for view.</div>
-  </body>
+<script src="resource/js/angular.min.js"></script>
+<script src="resource/js/angular-ui-router.js"></script>
+<script src="resource/js/jquery-3.1.1.min.js"></script>
+
+<script src="resource/component/sudoku/sudokuController.js"></script>
+<script src="resource/component/sudoku/sudokuComponent.js"></script>
+<script src="resource/component/picCB/picCBController.js"></script>
+<script src="resource/component/picCB/picCBComponent.js"></script>
+
+<script src="resource/js/app.js"></script>
+
+
+<html ng-app="myApp">
+
+<head>
+  <title>My Space</title>
+</head>
+
+<body ng-controller="myAppController">
+
+<h2>{{title}}</h2>
+<p>{{prompt}}</p>
+
+<div class="container">
+  <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+  <div ui-view></div>
+</div>
+
+
+</body>
 </html>

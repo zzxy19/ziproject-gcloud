@@ -1,0 +1,72 @@
+<div class="picCB">
+    <div>
+        Using filter: 
+        <select ng-options="item as item.name for item in cCtrl.filterList" ng-model="cCtrl.filterSelect"
+            ng-change="cCtrl.onChangeFilter()"></select>
+        <div ng-show="cCtrl.arbitraryFilter">
+            Filter parameters:
+            R:<input type="number" ng-model="cCtrl.filterSelect.value[0][0]" style={{::cCtrl.inputW}} />
+              <input type="number" ng-model="cCtrl.filterSelect.value[0][1]" style={{::cCtrl.inputW}} />
+              <input type="number" ng-model="cCtrl.filterSelect.value[0][2]" style={{::cCtrl.inputW}} />
+            G:<input type="number" ng-model="cCtrl.filterSelect.value[1][0]" style={{::cCtrl.inputW}} />
+              <input type="number" ng-model="cCtrl.filterSelect.value[1][1]" style={{::cCtrl.inputW}} />
+              <input type="number" ng-model="cCtrl.filterSelect.value[1][2]" style={{::cCtrl.inputW}} />
+            B:<input type="number" ng-model="cCtrl.filterSelect.value[2][0]" style={{::cCtrl.inputW}} />
+              <input type="number" ng-model="cCtrl.filterSelect.value[2][1]" style={{::cCtrl.inputW}} />
+              <input type="number" ng-model="cCtrl.filterSelect.value[2][2]" style={{::cCtrl.inputW}} />
+        </div>
+    </div>
+   
+    <div>
+    <button ng-click="cCtrl.toggleImages()">1. Upload File</button>
+    </div>
+    <div ng-show="cCtrl.showImages">
+	    <div>
+		<form name="picForm" id="picForm" enctype="multipart/form-data"> 
+		    <p><input type="file" name="file" id="imageFile" /></p>
+		    <button ng-click="cCtrl.uploadImage()">Submit</button>
+		    <button ng-click="cCtrl.renderImage()">Render</button>
+		</form>
+	    </div>
+	    
+	    <div>
+	        <div style="display: inline-block;">
+	            <p>Original Image</p>
+	            <img id="origImage" src="#" alt="original image" width={{::cCtrl.w}} height={{::cCtrl.h}} />
+	        </div>
+	        <div style="display: inline-block;">
+	            <p>Alternative Image</p>
+	            <img id="altImage" src="#" alt="alternative image" width={{::cCtrl.w}} height={{::cCtrl.h}} />
+	        </div>
+	    </div>
+    </div>
+    
+    <div>
+    <button ng-click="cCtrl.toggleSCs()">2. Display Single Color</button>
+    </div>
+    <div ng-show="cCtrl.showSCs">
+	    <div>
+	    	R:<input type="number" ng-model="cCtrl.R" style={{::cCtrl.inputW}} ng-change="cCtrl.onRenderSC()" />
+	        G:<input type="number" ng-model="cCtrl.G" style={{::cCtrl.inputW}} ng-change="cCtrl.onRenderSC()" />
+	        B:<input type="number" ng-model="cCtrl.B" style={{::cCtrl.inputW}} ng-change="cCtrl.onRenderSC()" />
+	        A:<input type="number" ng-model="cCtrl.A" style={{::cCtrl.inputW}} ng-change="cCtrl.onRenderSC()" />
+	    </div>
+	    <div>
+	    	R: {{cCtrl.outR}}
+	    	G: {{cCtrl.outG}}
+	    	B: {{cCtrl.outB}}
+	    	A: {{cCtrl.outA}}
+	    </div>
+	    
+	    <div>
+	        <div style="display: inline-block;">
+	            <p>Original Color</p>
+	            <canvas id="origCanvas" width={{::cCtrl.w}} height={{::cCtrl.h}} />
+	        </div>
+	        <div style="display: inline-block;">
+	            <p>Alternative Color</p>
+	            <canvas id="altCanvas" width={{::cCtrl.w}} height={{::cCtrl.h}} />
+	        </div>
+	    </div>
+    </div>
+</div>
