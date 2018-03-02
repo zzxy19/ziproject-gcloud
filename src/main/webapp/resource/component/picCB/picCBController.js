@@ -16,11 +16,9 @@ function picCBController() {
     
     
     var imageFile;
-    var origCanvas;
-    var origCtx;
-    var origImage, newImage;
-    var origImageData;
-    
+    var origCanvas, altCanvas, secondCanvas;
+    var origImage;
+
     // filters credit to http://web.archive.org/web/20081014161121/http://www.colorjack.com/labs/colormatrix/
     self.filterList = [
         {name: "User-defined", value: [[1, 0, 0], [0, 1, 0], [0, 0 ,1]]},
@@ -99,11 +97,9 @@ function picCBController() {
         return Math.floor(num);
     };
     
-    var transformImage = function() {
-        var data = origImageData.data;
+    var transformImage = function(data, filter) {
         var len = data.length;
         var r,g,b;
-        var filter = self.filterSelect.value;
         for (var i=0; i<len-3; i+=4) {
             r = filter[0][0] * data[i] + filter[0][1] * data[i+1] + filter[0][2] * data[i+2];
             g = filter[1][0] * data[i] + filter[1][1] * data[i+1] + filter[1][2] * data[i+2];
@@ -112,7 +108,6 @@ function picCBController() {
             data[i+1] = uint8ify(g);
             data[i+2] = uint8ify(b);
         }
-        
     };
     
     self.onRenderSC = function() {
@@ -120,28 +115,33 @@ function picCBController() {
     };
     
     var initSingleColor = function() {
-    	scOrigCanvas = document.getElementById("origCanvas");
-    	scAltCanvas = document.getElementById("altCanvas");
+    	scOrigCanvas = document.getElementById("scOrigCanvas");
+    	scAltCanvas = document.getElementById("scAltCanvas");
     	self.onRenderSC();
     };
     
     var init = function() {
-        origCanvas = document.createElement("canvas");
-        origCanvas.width = w;
-        origCanvas.height = h;
+        origCanvas = document.getElementById("origCanvas");
+        altCanvas = document.getElementById("altCanvas");
+        secondCanvas = document.getElementById("secondCanvas");
         origImage = document.getElementById("origImage");
-        altImage = document.getElementById("altImage");
     };
     
     var processOrigImage = function() {
-    	origImage2Canvas();
-        transformImage();
-        paintToImage();
-    };
-    
-    var paintToImage = function() {
-        origCtx.putImageData(origImageData, 0, 0);
-        canvas2AltImage();
+        altCanvas.width = w;
+        altCanvas.height = h;
+        secondCanvas.width = w;
+        secondCanvas.height = h;
+
+        origCanvas.getContext("2d").drawImage(origImage, 0, 0, w, h);
+
+        var imageData = origCanvas.getContext("2d").getImageData(0, 0, w, h);
+      	transformImage(imageData.data, self.filterSelect.value);
+        altCanvas.getContext("2d").putImageData(imageData, 0, 0);
+
+    	// apply the filter a second time
+    	transformImage(imageData.data, self.filterSelect.value);
+        secondCanvas.getContext("2d").putImageData(imageData, 0, 0);
     };
     
     var readFile = function(file) {
@@ -152,16 +152,6 @@ function picCBController() {
         };
 	
         reader.readAsDataURL(file);
-    };
-    
-    var origImage2Canvas = function() {
-        origCtx = origCanvas.getContext("2d");
-        origCtx.drawImage(origImage, 0, 0, w, h);
-      	origImageData = origCtx.getImageData(0, 0, w, h);
-    };
-    
-    var canvas2AltImage = function() {
-    	altImage.src = origCanvas.toDataURL("image/jpeg");
     };
     
     init();
